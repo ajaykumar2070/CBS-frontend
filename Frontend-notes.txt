@@ -1,0 +1,162 @@
+# Content Broadcasting System - Frontend Notes
+
+## Project Overview
+
+This project is a frontend-only Content Broadcasting System built using Next.js and React.
+Teachers can upload educational content, principals can approve or reject it, and students/public users can view live approved content.
+
+## Tech Stack
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+* shadcn/ui
+* React Query (TanStack Query)
+* React Hook Form
+* Zod
+
+---
+
+## Authentication Flow
+
+The application uses mock authentication for demo purposes.
+
+### Demo Credentials
+
+Principal:
+
+* Email: [admin@gmail.com](mailto:admin@gmail.com)
+* Password: admin123
+
+Teacher:
+
+* Email: [teacher@gmail.com](mailto:teacher@gmail.com)
+* Password: teacher123
+
+After login:
+
+* Principal users are redirected to `/principal/dashboard`
+* Teacher users are redirected to `/teacher/dashboard`
+
+User information and token are stored in localStorage.
+
+---
+
+## Role Based Access
+
+### Teacher
+
+Teacher can:
+
+* Upload content
+* View uploaded content
+* Remove pending content
+* View approval status and rejection reason
+
+### Principal
+
+Principal can:
+
+* View all uploaded content
+* Approve content
+* Reject content with reason
+* Filter content by status
+
+### Public User
+
+Public users can access:
+
+* `/live/:teacherId`
+
+This page displays approved and active broadcast content only.
+
+---
+
+## API Integration Approach
+
+Currently the project uses mock APIs with localStorage to simulate backend behavior.
+
+All logic is separated into service files:
+
+* auth.service.ts
+* content.service.ts
+* approval.service.ts
+
+This structure makes it easy to replace mock logic with real backend APIs later.
+
+---
+
+## State Management
+
+The project uses:
+
+* React Query for server/data state
+* React Context for authentication state
+* React Hook Form for form state
+
+React Query is used for:
+
+* fetching content
+* caching
+* invalidating queries after mutations
+* loading/error handling
+
+---
+
+## Validation
+
+Zod is used for validation.
+
+Upload form validations:
+
+* required title
+* required subject
+* valid image type (JPG/PNG/GIF)
+* max file size 10MB
+* end time must be greater than start time
+
+---
+
+## Features Implemented
+
+### Teacher Features
+
+* Login
+* Upload content
+* Image preview
+* Dashboard stats
+* Remove content
+* View rejection reason
+
+### Principal Features
+
+* Dashboard
+* Approve/reject workflow
+* Status filters
+* Content preview
+
+### Public Features
+
+* Live broadcast page
+* Active content display
+* Auto rotation based on duration
+* Empty/loading states
+
+---
+
+## Assumptions
+
+* localStorage is used instead of a real database
+* image files are stored as Base64 strings
+* authentication is mock-based
+* application is focused mainly on desktop view
+
+---
+
+## Notes
+
+* API calls are separated from components
+* Reusable UI components are used throughout the project
+* Loading and empty states are handled across pages
+* The project structure is kept modular for scalability
